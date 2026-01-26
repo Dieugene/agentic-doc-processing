@@ -1,0 +1,6 @@
+{
+  "test_request_1": "This is a mock response for test request 1.",
+  "test_request_2": "This is a mock response for test request 2.",
+  "greeting": "Hello! How can I help you today?",
+  "summarize": "This document discusses the implementation of LLM Gateway with batching optimization."
+}

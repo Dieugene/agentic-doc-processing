@@ -1,0 +1,248 @@
+{
+  "basic_hierarchy": {
+    "document_id": "test_doc",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "title": "test_doc",
+        "content": "Full text of the document...",
+        "page_range": {"start": 1, "end": 4},
+        "parent_id": null,
+        "children_ids": ["section_1", "section_2"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1": {
+        "id": "section_1",
+        "type": "chapter",
+        "title": "1. Introduction",
+        "content": "Full text of the document...",
+        "page_range": {"start": 1, "end": 3},
+        "parent_id": "root",
+        "children_ids": ["section_1.1", "section_1.2"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1.1": {
+        "id": "section_1.1",
+        "type": "section",
+        "title": "1.1. Overview",
+        "content": "Full text of the document...",
+        "page_range": {"start": 2, "end": 2},
+        "parent_id": "section_1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1.2": {
+        "id": "section_1.2",
+        "type": "section",
+        "title": "1.2. Details",
+        "content": "Full text of the document...",
+        "page_range": {"start": 3, "end": 3},
+        "parent_id": "section_1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_2": {
+        "id": "section_2",
+        "type": "chapter",
+        "title": "2. Requirements",
+        "content": "Full text of the document...",
+        "page_range": {"start": 4, "end": 4},
+        "parent_id": "root",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      }
+    }
+  },
+  "with_tables": {
+    "document_id": "test_doc_with_tables",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "title": "test_doc_with_tables",
+        "content": "Full text with tables...",
+        "page_range": {"start": 1, "end": 5},
+        "parent_id": null,
+        "children_ids": ["section_1", "table_1", "section_2"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1": {
+        "id": "section_1",
+        "type": "chapter",
+        "title": "1. Data Section",
+        "content": "Full text with tables...",
+        "page_range": {"start": 1, "end": 3},
+        "parent_id": "root",
+        "children_ids": ["section_1.1", "table_2"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1.1": {
+        "id": "section_1.1",
+        "type": "section",
+        "title": "1.1. Financial Data",
+        "content": "Full text with tables...",
+        "page_range": {"start": 2, "end": 2},
+        "parent_id": "section_1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "table_1": {
+        "id": "table_1",
+        "type": "table",
+        "title": "Table 1. Financial indicators for 2024",
+        "content": "",
+        "page_range": {"start": 2, "end": 2},
+        "parent_id": "section_1.1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": {
+          "type": "numeric",
+          "source": "original_file",
+          "data": {
+            "table_id": "table_1",
+            "location": {"bbox": [100, 200, 400, 300], "page": 2}
+          }
+        }
+      },
+      "table_2": {
+        "id": "table_2",
+        "type": "table",
+        "title": "Table 2. Comparison of approaches",
+        "content": "",
+        "page_range": {"start": 3, "end": 3},
+        "parent_id": "section_1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": {
+          "type": "text_matrix",
+          "source": "vlm_ocr",
+          "data": {
+            "table_id": "table_2",
+            "location": {"bbox": [100, 100, 400, 250], "page": 3},
+            "flattened": []
+          }
+        }
+      },
+      "section_2": {
+        "id": "section_2",
+        "type": "chapter",
+        "title": "2. Performance",
+        "content": "Full text with tables...",
+        "page_range": {"start": 5, "end": 5},
+        "parent_id": "root",
+        "children_ids": ["table_3"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "table_3": {
+        "id": "table_3",
+        "type": "table",
+        "title": "Table 3. System performance metrics",
+        "content": "",
+        "page_range": {"start": 5, "end": 5},
+        "parent_id": "section_2",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": {
+          "type": "numeric",
+          "source": "original_file",
+          "data": {
+            "table_id": "table_3",
+            "location": {"bbox": [150, 150, 450, 350], "page": 5}
+          }
+        }
+      }
+    }
+  },
+  "with_gaps": {
+    "document_id": "test_doc_gaps",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "title": "test_doc_gaps",
+        "content": "Text with gaps...",
+        "page_range": {"start": 1, "end": 4},
+        "parent_id": null,
+        "children_ids": ["section_1", "section_1.3", "section_2"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1": {
+        "id": "section_1",
+        "type": "chapter",
+        "title": "1. Section One",
+        "content": "Text with gaps...",
+        "page_range": {"start": 1, "end": 3},
+        "parent_id": "root",
+        "children_ids": ["section_1.3"],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_1.3": {
+        "id": "section_1.3",
+        "type": "section",
+        "title": "1.3. Skipped 1.2",
+        "content": "Text with gaps...",
+        "page_range": {"start": 3, "end": 3},
+        "parent_id": "section_1",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      },
+      "section_2": {
+        "id": "section_2",
+        "type": "chapter",
+        "title": "2. Section Two",
+        "content": "Text with gaps...",
+        "page_range": {"start": 4, "end": 4},
+        "parent_id": "root",
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      }
+    }
+  },
+  "empty_headers": {
+    "document_id": "test_doc_empty",
+    "nodes": {
+      "root": {
+        "id": "root",
+        "type": "root",
+        "title": "test_doc_empty",
+        "content": "Text without headers...",
+        "page_range": {"start": 1, "end": 1},
+        "parent_id": null,
+        "children_ids": [],
+        "internal_structure": {"raw": {}},
+        "explicit_refs": [],
+        "table_data": null
+      }
+    }
+  }
+}

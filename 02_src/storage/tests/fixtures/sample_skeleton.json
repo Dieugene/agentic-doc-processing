@@ -1,0 +1,88 @@
+{
+  "document_id": "doc_714p",
+  "created_at": "2025-01-23T10:00:00Z",
+  "source_file": {
+    "path": "/path/to/714-P.pdf",
+    "hash": "sha256:abc123...",
+    "size_bytes": 5242880
+  },
+  "nodes": {
+    "root": {
+      "id": "root",
+      "type": "root",
+      "title": "Положение Банка России 714-П",
+      "content": "Положение о правилах ведения бухгалтерского учета...",
+      "page_range": {"start": 1, "end": 150},
+      "parent_id": null,
+      "children_ids": ["section_1", "section_2", "section_3"],
+      "internal_structure": {},
+      "explicit_refs": [],
+      "hash": "root_hash_12345",
+      "table_data": null
+    },
+    "section_1": {
+      "id": "section_1",
+      "type": "chapter",
+      "title": "1. Общие положения",
+      "content": "1.1. Настоящее Положение определяет правила...",
+      "page_range": {"start": 1, "end": 10},
+      "parent_id": "root",
+      "children_ids": ["section_1_1", "section_1_2"],
+      "internal_structure": {
+        "1.1": {"title": "Основные понятия", "page": 1},
+        "1.2": {"title": "Сфера применения", "page": 3}
+      },
+      "explicit_refs": ["ref:appendix:1"],
+      "hash": "hash_section_1",
+      "table_data": null
+    },
+    "section_1_1": {
+      "id": "section_1_1",
+      "type": "section",
+      "title": "1.1. Основные понятия",
+      "content": "Для целей настоящего Положения используются следующие термины...",
+      "page_range": {"start": 1, "end": 3},
+      "parent_id": "section_1",
+      "children_ids": [],
+      "internal_structure": {},
+      "explicit_refs": [],
+      "hash": "hash_section_1_1",
+      "table_data": null
+    },
+    "section_2": {
+      "id": "section_2",
+      "type": "chapter",
+      "title": "2. Организация бухгалтерского учета",
+      "content": "2.1. Кредитная организация организует бухгалтерский учет...",
+      "page_range": {"start": 11, "end": 50},
+      "parent_id": "root",
+      "children_ids": [],
+      "internal_structure": {
+        "2.1": {"title": "Требования к организации", "page": 11},
+        "2.2": {"title": "Документирование", "page": 15}
+      },
+      "explicit_refs": [],
+      "hash": "hash_section_2",
+      "table_data": null
+    },
+    "section_3": {
+      "id": "section_3",
+      "type": "chapter",
+      "title": "3. Требования к отчётности",
+      "content": "3.1. Кредитная организация составляет отчетность...",
+      "page_range": {"start": 51, "end": 100},
+      "parent_id": "root",
+      "children_ids": [],
+      "internal_structure": {},
+      "explicit_refs": [],
+      "hash": "hash_section_3",
+      "table_data": {
+        "columns": ["Показатель", "Значение", "Дата"],
+        "data": [
+          ["Капитал", "1000000", "01.01.2025"],
+          ["Активы", "5000000", "01.01.2025"]
+        ]
+      }
+    }
+  }
+}

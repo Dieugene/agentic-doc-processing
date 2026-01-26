@@ -1,0 +1,15 @@
+{
+  "expected_nodes": 3,
+  "expected_hierarchy": {
+    "root": [
+      "section_1"
+    ]
+  },
+  "expected_tables": [
+    {
+      "id": "table_1",
+      "type": "NUMERIC",
+      "attached_to": "section_1"
+    }
+  ]
+}

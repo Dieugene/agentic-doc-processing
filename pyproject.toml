@@ -1,0 +1,31 @@
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["02_src"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Markers for test categorization
+markers = [
+    "integration: marks tests as integration tests (deselect with '-m \"not integration\"')",
+    "unit: marks tests as unit tests",
+    "slow: marks tests as slow running",
+]
+
+# Asyncio configuration
+asyncio_mode = "auto"
+
+# Output options
+addopts = [
+    "-ra",
+    "-q",
+    "--strict-markers",
+    "--strict-config",
+]
+
+# Logging
+log_cli = false
+log_cli_level = "INFO"
+
+# Coverage options (if using pytest-cov)
+# addopts = ["--cov=02_src", "--cov-report=html", "--cov-report=term-missing"]

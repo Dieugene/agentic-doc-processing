@@ -1,0 +1,60 @@
+{
+  "document_id": "doc_714p_sample",
+  "nodes": {
+    "root": {
+      "id": "root",
+      "type": "root",
+      "title": "Положение ЦБ РФ 714-П",
+      "content": "Полный текст документа Положения Банка России от 28.06.2017 № 714-П...",
+      "page_range": {"start": 1, "end": 50},
+      "parent_id": null,
+      "children_ids": ["section_3", "appendix_a"],
+      "internal_structure": {"raw": {}},
+      "explicit_refs": [],
+      "hash": "abc123def456"
+    },
+    "section_3": {
+      "id": "section_3",
+      "type": "chapter",
+      "title": "3. Требования к отчётности",
+      "content": "3. Требования к отчётности\n3.1. Общие требования\n3.2. Сроки представления\n3.2.1. Ежемесячная отчётность",
+      "page_range": {"start": 15, "end": 42},
+      "parent_id": "root",
+      "children_ids": [],
+      "internal_structure": {
+        "raw": {
+          "3.1": {"title": "Общие требования", "page": 15},
+          "3.2": {"title": "Сроки представления", "page": 18},
+          "3.2.1": {"title": "Ежемесячная", "page": 18}
+        }
+      },
+      "explicit_refs": ["Приложение А", "appendix_a"],
+      "hash": "def456ghi789"
+    },
+    "appendix_a": {
+      "id": "appendix_a",
+      "type": "appendix",
+      "title": "Приложение А. Формы отчётности",
+      "content": "Форма отчетности 0409101...\n\nТаблица 1. Основные показатели",
+      "page_range": {"start": 43, "end": 50},
+      "parent_id": "root",
+      "children_ids": [],
+      "internal_structure": {"raw": {}},
+      "explicit_refs": [],
+      "hash": "ghi789jkl012",
+      "table_data": {
+        "type": "numeric",
+        "source": "original_file",
+        "data": {
+          "columns": ["Показатель", "Значение", "Дата"],
+          "index": [0, 1, 2],
+          "values": [
+            ["Капитал", "1000000", "01.01.2025"],
+            ["Активы", "1500000", "01.01.2025"],
+            ["Обязательства", "500000", "01.01.2025"]
+          ]
+        }
+      }
+    }
+  }
+}

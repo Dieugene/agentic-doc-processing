@@ -1,0 +1,130 @@
+{
+  "scenarios": [
+    {
+      "name": "successful_request",
+      "description": "Request succeeds on first attempt without any retry",
+      "error": null,
+      "expected_retries": 0,
+      "expected_result": "success"
+    },
+    {
+      "name": "temporary_503_error",
+      "description": "Request fails with 503 on first attempt, succeeds on second",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 503,
+        "message": "Service Unavailable"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 1,
+      "expected_result": "success"
+    },
+    {
+      "name": "rate_limit_429",
+      "description": "Request hits rate limit 429, succeeds on third attempt",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 429,
+        "message": "Rate limit exceeded"
+      },
+      "fail_attempts": 2,
+      "expected_retries": 2,
+      "expected_result": "success"
+    },
+    {
+      "name": "client_error_400",
+      "description": "Request fails with 400 bad request, should not retry",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 400,
+        "message": "Bad request"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 0,
+      "expected_result": "error"
+    },
+    {
+      "name": "not_found_404",
+      "description": "Request fails with 404 not found, should not retry",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 404,
+        "message": "Not found"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 0,
+      "expected_result": "error"
+    },
+    {
+      "name": "connection_error",
+      "description": "Request fails with network error, succeeds on retry",
+      "error": {
+        "type": "ConnectionError",
+        "message": "Network connection failed"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 1,
+      "expected_result": "success"
+    },
+    {
+      "name": "timeout_error",
+      "description": "Request times out, succeeds on retry",
+      "error": {
+        "type": "TimeoutError",
+        "message": "Request timeout"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 1,
+      "expected_result": "success"
+    },
+    {
+      "name": "persistent_error",
+      "description": "Request fails consistently, exceeds max_retries",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 503,
+        "message": "Service Unavailable"
+      },
+      "fail_attempts": 10,
+      "max_retries": 3,
+      "expected_retries": 3,
+      "expected_result": "error"
+    },
+    {
+      "name": "unauthorized_401",
+      "description": "Request fails with 401 unauthorized, should not retry",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 401,
+        "message": "Unauthorized"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 0,
+      "expected_result": "error"
+    },
+    {
+      "name": "forbidden_403",
+      "description": "Request fails with 403 forbidden, should not retry",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 403,
+        "message": "Forbidden"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 0,
+      "expected_result": "error"
+    },
+    {
+      "name": "gateway_timeout_504",
+      "description": "Request fails with 504 gateway timeout, succeeds on retry",
+      "error": {
+        "type": "HTTPStatusError",
+        "status_code": 504,
+        "message": "Gateway Timeout"
+      },
+      "fail_attempts": 1,
+      "expected_retries": 1,
+      "expected_result": "success"
+    }
+  ]
+}
