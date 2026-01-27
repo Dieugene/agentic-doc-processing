@@ -24,15 +24,15 @@ def get_storage_config() -> Dict[str, str]:
 
     Returns:
         Dict with keys:
-        - base_path: Base directory for document storage (default: "data/")
-        - cache_path: Cache directory for VLM-OCR results (default: "data/cache/vlm_ocr/")
+        - base_path: Base directory for document storage (default: "03_data/")
+        - cache_path: Cache directory for VLM-OCR results (default: "03_data/cache/vlm_ocr/")
 
     Examples:
         >>> config = get_storage_config()
         >>> base = config["base_path"]
     """
-    base_path = os.getenv("STORAGE_BASE_PATH", "data/")
-    cache_path = os.getenv("STORAGE_CACHE_PATH", "data/cache/vlm_ocr/")
+    base_path = os.getenv("STORAGE_BASE_PATH", "03_data/")
+    cache_path = os.getenv("STORAGE_CACHE_PATH", "03_data/cache/vlm_ocr/")
 
     return {
         "base_path": base_path,

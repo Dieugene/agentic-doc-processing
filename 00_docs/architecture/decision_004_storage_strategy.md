@@ -25,7 +25,7 @@
 ### Выбор: Вариант A (File-based JSON)
 
 ```
-data/
+03_data/
 ├── {document_id}/
 │   ├── skeleton.json              # DocumentSkeleton
 │   ├── navigation_index.json      # NavigationIndex (будущая задача)
@@ -62,7 +62,7 @@ data/
 ### DocumentSkeleton
 
 ```json
-// data/{document_id}/skeleton.json
+// 03_data/{document_id}/skeleton.json
 {
   "document_id": "doc_714p",
   "created_at": "2025-01-23T10:00:00Z",

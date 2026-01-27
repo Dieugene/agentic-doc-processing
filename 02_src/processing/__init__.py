@@ -1,6 +1,7 @@
 """Processing module - document conversion and rendering."""
 
 from processing.converter import Converter, ConversionError, FileType
+from processing.processor import DocumentProcessor
 from processing.renderer import RenderingError, Renderer
 from processing.skeleton_builder import SkeletonBuilder, generate_id_from_title, level_to_node_type
 from processing.vlm_ocr_extractor import (
@@ -21,4 +22,5 @@ __all__ = [
     "VLMOCRExtractor",
     "DocumentData",
     "VLMExtractionException",
+    "DocumentProcessor",
 ]

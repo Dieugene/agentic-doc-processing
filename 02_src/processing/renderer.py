@@ -14,9 +14,9 @@ from pathlib import Path
 from typing import List, Optional
 
 try:
-    from pdf2image import convert_from_path
+    import fitz  # PyMuPDF
 except ImportError:
-    convert_from_path = None
+    fitz = None
 
 try:
     from PIL import Image
@@ -46,7 +46,7 @@ class Renderer:
     """PDF to PNG renderer for VLM-OCR processing.
 
     Converts PDF documents into PNG images page by page.
-    Uses pdf2image (wrapper around pdftoppm from Poppler).
+    Uses PyMuPDF (fitz) - pure Python library without external dependencies.
     """
 
     def __init__(self, dpi: int = 200, log_dir: Optional[str] = None):
@@ -88,11 +88,11 @@ class Renderer:
         """Check if required dependencies are installed.
 
         Raises:
-            ImportError: If pdf2image or Pillow are not installed
+            ImportError: If PyMuPDF or Pillow are not installed
         """
-        if convert_from_path is None:
+        if fitz is None:
             raise ImportError(
-                "pdf2image is required. Install with: pip install pdf2image"
+                "PyMuPDF is required. Install with: pip install pymupdf"
             )
         if Image is None:
             raise ImportError(
@@ -119,21 +119,8 @@ class Renderer:
         logger.info(f"Starting render: {pdf_path} (dpi={self.dpi})")
 
         try:
-            # Run blocking pdf2image call in thread pool
-            pil_images = await asyncio.to_thread(
-                convert_from_path,
-                pdf_path,
-                dpi=self.dpi,
-            )
-
-            # Convert PIL Images to PNG bytes
-            png_images = []
-            for i, pil_img in enumerate(pil_images):
-                buffer = io.BytesIO()
-                pil_img.save(buffer, format="PNG")
-                png_bytes = buffer.getvalue()
-                png_images.append(png_bytes)
-                logger.debug(f"Converted page {i+1}/{len(pil_images)} to PNG")
+            # Run blocking fitz operations in thread pool
+            png_images = await asyncio.to_thread(self._render_all_pages, pdf_path)
 
             logger.info(f"Rendering successful: {len(png_images)} pages")
             return png_images
@@ -142,6 +129,39 @@ class Renderer:
             error_msg = str(e)
             logger.error(f"Rendering failed: {error_msg}")
             raise RenderingError(pdf_path, error_msg) from e
+
+    def _render_all_pages(self, pdf_path: str) -> List[bytes]:
+        """Render all pages from PDF to PNG bytes (blocking operation).
+
+        Args:
+            pdf_path: Path to the PDF file
+
+        Returns:
+            List of PNG images as bytes
+        """
+        doc = fitz.open(pdf_path)
+        try:
+            png_images = []
+            for page_num in range(len(doc)):
+                page = doc.load_page(page_num)
+                pix = page.get_pixmap(dpi=self.dpi)
+
+                # Convert pixmap to PIL Image
+                mode = "RGB" if pix.alpha == 0 else "RGBA"
+                img = Image.frombytes(mode, [pix.width, pix.height], pix.samples)
+                if mode == "RGBA":
+                    img = img.convert("RGB")
+
+                # Convert to PNG bytes
+                buffer = io.BytesIO()
+                img.save(buffer, format="PNG")
+                png_bytes = buffer.getvalue()
+                png_images.append(png_bytes)
+                logger.debug(f"Converted page {page_num+1}/{len(doc)} to PNG")
+
+            return png_images
+        finally:
+            doc.close()
 
     async def render_page_to_image(
         self,
@@ -177,27 +197,10 @@ class Renderer:
         )
 
         try:
-            # Run blocking pdf2image call in thread pool
-            # Use first_page and last_page to render only the requested page
-            pil_images = await asyncio.to_thread(
-                convert_from_path,
-                pdf_path,
-                dpi=self.dpi,
-                first_page=page_number,
-                last_page=page_number,
+            # Run blocking fitz operations in thread pool
+            png_bytes = await asyncio.to_thread(
+                self._render_single_page, pdf_path, page_number
             )
-
-            # Check if we got the page
-            if not pil_images:
-                raise RenderingError(
-                    pdf_path,
-                    f"Page {page_number} does not exist in PDF"
-                )
-
-            # Convert to PNG bytes
-            buffer = io.BytesIO()
-            pil_images[0].save(buffer, format="PNG")
-            png_bytes = buffer.getvalue()
 
             logger.info(f"Page {page_number} rendered successfully")
             return png_bytes
@@ -209,3 +212,44 @@ class Renderer:
             error_msg = str(e)
             logger.error(f"Page rendering failed: {error_msg}")
             raise RenderingError(pdf_path, error_msg) from e
+
+    def _render_single_page(self, pdf_path: str, page_number: int) -> bytes:
+        """Render a single page from PDF to PNG bytes (blocking operation).
+
+        Args:
+            pdf_path: Path to the PDF file
+            page_number: Page number (1-indexed)
+
+        Returns:
+            PNG image as bytes
+
+        Raises:
+            RenderingError: If page doesn't exist
+        """
+        doc = fitz.open(pdf_path)
+        try:
+            # Convert to 0-indexed
+            page_idx = page_number - 1
+
+            # Check if page exists
+            if page_idx >= len(doc):
+                raise RenderingError(
+                    pdf_path,
+                    f"Page {page_number} does not exist in PDF (total pages: {len(doc)})"
+                )
+
+            page = doc.load_page(page_idx)
+            pix = page.get_pixmap(dpi=self.dpi)
+
+            # Convert pixmap to PIL Image
+            mode = "RGB" if pix.alpha == 0 else "RGBA"
+            img = Image.frombytes(mode, [pix.width, pix.height], pix.samples)
+            if mode == "RGBA":
+                img = img.convert("RGB")
+
+            # Convert to PNG bytes
+            buffer = io.BytesIO()
+            img.save(buffer, format="PNG")
+            return buffer.getvalue()
+        finally:
+            doc.close()

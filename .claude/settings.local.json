@@ -11,7 +11,9 @@
       "Bash(source:*)",
       "Bash(python:*)",
       "Bash(pip install:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(chcp:*)",
+      "Bash(PYTHONPATH=\"02_src\" python:*)"
     ]
   }
 }
